@@ -49,6 +49,14 @@
     background-color: #f5f5f5;
 }
 
+.search-container:hover {
+    background-color: rgb(202, 202, 202);
+}
+
+.search-input:hover {
+    background-color: rgb(202, 202, 202);
+}
+
 .content2 a {
     text-decoration: none;
     color: black;
@@ -67,4 +75,14 @@
 .content3 img {
     width: 30px;
     height: 30px;
+}
+
+.icons {
+    padding: 10px;
+    border-radius: 30px;
+}
+
+.icons:hover {
+    cursor: pointer;
+    background-color: rgb(202, 202, 202);
 }
