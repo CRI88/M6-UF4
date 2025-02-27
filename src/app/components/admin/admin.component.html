@@ -1,1 +1,51 @@
-<p>admin works!</p>
+<div class="content">
+    <h1>Agregar o modificar producto</h1>
+
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+        <!-- Nº de referencia -->
+        <label for="reference">Nº de referencia :</label>
+        <input id="reference" formControlName="reference" type="text" [ngClass]="{ 'error': isInvalid('reference') }" />
+        <div *ngIf="isInvalid('reference')" class="error-message">
+            El nº de referencia es un campo obligatorio
+        </div>
+
+        <!-- Nombre del producto -->
+        <label for="name">Nombre del producto :</label>
+        <input id="name" formControlName="name" type="text" [ngClass]="{ 'error': isInvalid('name') }" />
+        <div *ngIf="isInvalid('name')" class="error-message">
+            El nombre del producto es un campo obligatorio
+        </div>
+
+        <!-- Precio -->
+        <label for="price">Precio :</label>
+        <input id="price" formControlName="price" type="text" [ngClass]="{ 'error': isInvalid('price') }" />
+        <div *ngIf="isInvalid('price')" class="error-message">
+            El precio debe ser un número válido
+        </div>
+
+        <!-- Descripción -->
+        <label for="description">Descripción :</label>
+        <textarea id="description" formControlName="description"></textarea>
+        <span *ngIf="productForm.controls['description'].valid">✔️</span>
+
+        <!-- Tipo de producto -->
+        <label for="type">Tipo de Producto :</label>
+        <select id="type" formControlName="type">
+            <option value="running">Sabatilles de running</option>
+            <option value="casual">Casual</option>
+            <option value="otros">Otros</option>
+        </select>
+
+        <!-- Producto de oferta -->
+        <label for="offer">Producto de oferta :</label>
+        <input id="offer" formControlName="offer" type="checkbox" />
+
+        <!-- Imagen del producto -->
+        <label for="image">Imagen del producto :</label>
+        <input type="file" id="image" (change)="onFileSelected($event)" />
+        <img *ngIf="imagePreview" [src]="imagePreview" class="preview" />
+
+        <!-- Botón de enviar -->
+        <button type="submit">AGREGAR PRODUCTO</button>
+    </form>
+</div>

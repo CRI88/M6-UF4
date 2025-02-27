@@ -1,0 +1,53 @@
+.content {
+    padding: 20px;
+    background-color: rgb(216, 216, 216);
+}
+
+h1 {
+    padding: 15px;
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 500px;
+    margin: auto;
+    margin-top: 30px;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input.error {
+    border-color: red;
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+}
+
+.preview {
+    width: 100px;
+    height: auto;
+    margin-top: 10px;
+}
+
+button {
+    padding: 10px;
+    background-color: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: gray;
+}
