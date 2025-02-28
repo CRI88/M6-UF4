@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule ,HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { NgIf, NgClass } from '@angular/common';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-admin',
@@ -13,14 +14,13 @@ import { NgIf, NgClass } from '@angular/common';
 export class AdminComponent {
   productForm: FormGroup;
   imagePreview: string | ArrayBuffer | null = null;
-  products: any[] = []; // Este array simula una lista de productos almacenados
-  private apiUrl = 'http://172.17.22.89:3000/upload'; // La URL de tu servidor (asegúrate de que el backend esté corriendo)
+  private apiUrl = 'http://172.17.22.89:3000/upload';
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private productService: ProductService) {
     this.productForm = this.fb.group({
       reference: ['', Validators.required],
       name: ['', Validators.required],
-      price: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],  // Campo obligatorio y debe ser un número
+      price: ['', [Validators.required, Validators.pattern('^[0-9]+([,.][0-9]+)?$')]],
       description: ['', Validators.required],
       type: ['running'],
       offer: [false],
@@ -51,7 +51,6 @@ export class AdminComponent {
       const productData = this.productForm.value;
       const formData = new FormData();
 
-      // Agregar los datos del formulario a un objeto FormData (incluyendo la imagen)
       formData.append('reference', productData.reference);
       formData.append('name', productData.name);
       formData.append('price', productData.price);
@@ -63,45 +62,24 @@ export class AdminComponent {
         formData.append('image', productData.image, productData.image.name);
       }
 
-      const existingProductIndex = this.products.findIndex(p => p.reference === productData.reference);
+      this.http.post(this.apiUrl, formData).subscribe(
+        (response) => {
+          console.log('Producto agregado:', response);
 
-      if (existingProductIndex !== -1) {
-        // Si el producto ya existe, actualizamos el producto en el servidor
-        this.updateProduct(formData);
-      } else {
-        // Si el producto no existe, lo agregamos al servidor
-        this.addProduct(formData);
-      }
+          this.productService.addProduct({
+            ...productData,
+            imageUrl: this.imagePreview
+          });
 
+          this.productForm.reset();
+          this.imagePreview = null;
+        },
+        (error) => {
+          console.error('Error al agregar producto:', error);
+        }
+      );
     } else {
       this.productForm.markAllAsTouched();
     }
-  }
-
-  // Método para agregar un nuevo producto al servidor
-  addProduct(formData: FormData): void {
-    this.http.post(this.apiUrl, formData).subscribe(
-      (response) => {
-        console.log('Producto agregado:', response);
-        // Aquí puedes actualizar la lista de productos o mostrar un mensaje de éxito
-      },
-      (error) => {
-        console.error('Error al agregar producto:', error);
-      }
-    );
-  }
-
-  // Método para actualizar un producto existente
-  updateProduct(formData: FormData): void {
-    const reference = this.productForm.value.reference;
-    this.http.put(`${this.apiUrl}/${reference}`, formData).subscribe(
-      (response) => {
-        console.log('Producto actualizado:', response);
-        // Aquí puedes actualizar la lista de productos o mostrar un mensaje de éxito
-      },
-      (error) => {
-        console.error('Error al actualizar producto:', error);
-      }
-    );
   }
 }
