@@ -19,13 +19,41 @@ export class AdminComponent {
   constructor(private fb: FormBuilder, private http: HttpClient, private productService: ProductService) {
     this.productForm = this.fb.group({
       reference: ['', Validators.required],
-      name: ['', Validators.required],
-      price: ['', [Validators.required, Validators.pattern('^[0-9]+([,.][0-9]+)?$')]],
-      description: ['', Validators.required],
+      name: ['', [
+        Validators.required, 
+        this.nameValidator.bind(this),
+        Validators.maxLength(50)
+      ]],
+      price: ['', [
+        Validators.required, 
+        Validators.pattern('^[0-9]+([,.][0-9]+)?$'),
+        Validators.min(0.1),
+        Validators.max(99999)
+      ]],
+      description: ['', [
+        Validators.required, 
+        Validators.maxLength(50)
+      ]],
       type: ['running'],
       offer: [false],
       image: [null]
-    })
+    });
+  }
+
+  nameValidator(control: any) {
+    let nameTaken = false;
+    
+    this.productService.getProducts().subscribe(products => {
+      if (products.some((product: any) => product.name.toLowerCase() === control.value.toLowerCase())) {
+        nameTaken = true;
+      }
+    });
+  
+    if (nameTaken) {
+      return { nameTaken: true };
+    }
+  
+    return null;
   }
 
   isInvalid(field: string): boolean {

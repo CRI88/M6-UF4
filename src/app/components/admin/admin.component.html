@@ -13,7 +13,7 @@
         <label for="name">Nombre del producto :</label>
         <input id="name" formControlName="name" type="text" [ngClass]="{ 'error': isInvalid('name') }" />
         <div *ngIf="isInvalid('name')" class="error-message">
-            El nombre del producto es un campo obligatorio
+            El nombre del producto es obligatorio, debe ser único y tener máximo 50 caracteres
         </div>
 
         <!-- Precio -->
@@ -22,11 +22,19 @@
         <div *ngIf="isInvalid('price')" class="error-message">
             El precio debe ser un número válido
         </div>
+        <div *ngIf="productForm.controls['price'].hasError('min')" class="error-message">
+            El precio no puede ser menor a 0.1
+        </div>
+        <div *ngIf="productForm.controls['price'].hasError('max')" class="error-message">
+            El precio no puede ser mayor a 99,999
+        </div>
 
         <!-- Descripción -->
         <label for="description">Descripción :</label>
         <textarea id="description" formControlName="description"></textarea>
-        <span *ngIf="productForm.controls['description'].valid">✔️</span>
+        <div *ngIf="isInvalid('description')" class="error-message">
+            La descripción es obligatoria y no puede superar los 50 caracteres
+        </div>
 
         <!-- Tipo de producto -->
         <label for="type">Tipo de Producto :</label>

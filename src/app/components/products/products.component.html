@@ -1,6 +1,7 @@
 <div class="store-container">
   <h1>Destacado</h1>
   <div class="product-list">
+    @if (products.length !=0) {
     <div class="product-card" *ngFor="let product of products">
       <img *ngIf="product.imageUrl" [src]="product.imageUrl" alt="Imagen del producto" class="product-image" />
       <h2>{{ product.name }}</h2>
@@ -9,5 +10,6 @@
       <p><strong>Tipo:</strong> {{ product.type }}</p>
       <p *ngIf="product.offer" class="offer-label">¡En oferta!</p>
     </div>
+    }
   </div>
 </div>
