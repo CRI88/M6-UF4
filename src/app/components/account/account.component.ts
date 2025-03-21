@@ -8,7 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-account',
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, RouterLink, CommonModule],
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, CommonModule],
   templateUrl: './account.component.html',
   styleUrl: './account.component.css'
 })
