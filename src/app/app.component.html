@@ -1,4 +1,4 @@
-<app-header></app-header>
-<app-navbar></app-navbar>
-<router-outlet />
-<app-footer></app-footer>
+<app-header *ngIf="!isLoginOrRegister()"></app-header>
+<app-navbar *ngIf="!isLoginOrRegister()"></app-navbar>
+<router-outlet></router-outlet>
+<app-footer *ngIf="!isLoginOrRegister()"></app-footer>

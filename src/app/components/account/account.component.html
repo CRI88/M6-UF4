@@ -1,1 +1,63 @@
-<p>account works!</p>
+<div class="account-container">
+    <form [formGroup]="registerForm" class="register-form">
+      <img class="register-image" src="log.png" alt="Logo">
+  
+      <h1 class="register-title">Mi cuenta</h1>
+  
+      <!-- Campo Nombre -->
+      <mat-form-field class="form-field">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" placeholder="Ex. Mario">
+        <mat-error *ngIf="registerForm.get('name')?.hasError('required')">
+          Name is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="registerForm.get('name')?.hasError('pattern')">
+          Please enter a valid name (only letters)
+        </mat-error>
+      </mat-form-field>
+  
+      <!-- Campo Apellido -->
+      <mat-form-field class="form-field">
+        <mat-label>Apellido</mat-label>
+        <input matInput formControlName="apellido">
+        <mat-error *ngIf="registerForm.get('apellido')?.hasError('required')">
+          Apellido is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+  
+      <!-- Campo Email -->
+      <mat-form-field class="form-field">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com">
+        <mat-error *ngIf="registerForm.get('email')?.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="registerForm.get('email')?.hasError('email')">
+          Please enter a valid email address
+        </mat-error>
+      </mat-form-field>
+  
+      <!-- Campo Contraseña -->
+      <mat-form-field class="form-field">
+        <mat-label>Contraseña</mat-label>
+        <input type="password" matInput formControlName="contrasenya">
+        <mat-error *ngIf="registerForm.get('contrasenya')?.hasError('required')">
+          Contraseña is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+  
+      <!-- Campo Código Postal -->
+      <mat-form-field class="form-field">
+        <mat-label>Codigo postal</mat-label>
+        <input matInput formControlName="postalCode">
+        <mat-error *ngIf="registerForm.get('postalCode')?.hasError('required')">
+          Codigo Postal is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="registerForm.get('postalCode')?.hasError('pattern')">
+          Please enter a valid postal code (5 digits)
+        </mat-error>
+      </mat-form-field>
+  
+      <button type="submit" (click)="onSubmit()" class="submit-button">Actualizar datos</button>
+    </form>
+  </div>

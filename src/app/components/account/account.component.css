@@ -1,0 +1,87 @@
+.account-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: white;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #b8acac;
+    padding: 30px;
+    border-radius: 10px;
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.register-title {
+    font-size: 32px;
+    color: black;
+    margin-bottom: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+.register-image {
+    width: 120px;
+    margin-bottom: 20px;
+}
+
+.form-field {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+mat-label {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+mat-error {
+    color: red;
+}
+
+.back-link {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.back-link:hover {
+    color: #bdc3c7;
+}
+
+.submit-button {
+    background-color: #ecf0f1;
+    color: #2c3e50;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #bdc3c7;
+}
+
+@media (max-width: 600px) {
+    .register-form {
+        padding: 20px;
+    }
+
+    .register-title {
+        font-size: 28px;
+    }
+
+    .register-image {
+        width: 100px;
+    }
+}
