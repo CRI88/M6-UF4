@@ -2,7 +2,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     background-color: white;
 }
 
@@ -26,8 +25,8 @@
 }
 
 .register-image {
-    width: 120px;
-    margin-bottom: 20px;
+    width: 180px;
+    margin-bottom: 5px;
 }
 
 .form-field {
