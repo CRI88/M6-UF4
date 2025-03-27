@@ -7,7 +7,7 @@
       <!-- Campo Nombre -->
       <mat-form-field class="form-field">
         <mat-label>Name</mat-label>
-        <input matInput formControlName="name" placeholder="Ex. Mario">
+        <input matInput formControlName="name"  placeholder="Ex. Mario">
         <mat-error *ngIf="registerForm.get('name')?.hasError('required')">
           Name is <strong>required</strong>
         </mat-error>

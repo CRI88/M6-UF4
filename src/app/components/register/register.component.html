@@ -1,5 +1,5 @@
 <div class="register-container">
-    <form [formGroup]="registerForm" class="register-form">
+    <form [formGroup]="registerForm" (submit)="onSubmit()" class="register-form">
       <img class="register-image" src="log.png" alt="Logo">
   
       <h1 class="register-title">Register</h1>
@@ -62,7 +62,7 @@
       <a routerLink="/login" class="back-link">Volver atrás</a>
   
       <!-- Botón para crear cuenta -->
-      <button type="submit" (click)="onSubmit()" class="submit-button">Crear cuenta</button>
+      <button type="submit" class="submit-button">Crear cuenta</button>
     </form>
   </div>
   

@@ -11,4 +11,6 @@ import { RouterLink } from '@angular/router';
 })
 export class NavbarComponent {
   faSearch = faSearch;
+
+  userRole = sessionStorage.getItem('userRole');
 }

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -16,7 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 export class RegisterComponent {
   registerForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router) {
     this.registerForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
       apellido: ['', [Validators.required]],
@@ -26,8 +26,8 @@ export class RegisterComponent {
     });
   }
 
-  onSubmit() {
-    if (this.registerForm.valid) {
+  async onSubmit() {
+
       const registerObject = {
         name: this.registerForm.value.name,
         apellido: this.registerForm.value.apellido,
@@ -36,11 +36,22 @@ export class RegisterComponent {
         postalCode: this.registerForm.value.postalCode
       };
 
-      // Llamada a la API para registrar al usuario
       console.log(registerObject);
-      // Aquí puedes realizar la llamada a la API con los datos de `registerObject`
-    } else {
-      console.log('Formulario inválido');
-    }
+
+      const response = await fetch('http://127.0.0.1:3000/api/users/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(registerObject)
+      });
+
+      console.log(response);
+
+      if (response.status >= 200 && response.status <= 299) {
+        console.log('Registro correcto');
+
+        this.router.navigate(['/login']);
+      }
   }
 }

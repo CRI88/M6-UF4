@@ -13,6 +13,16 @@ import { ReactiveFormsModule } from '@angular/forms';
   styleUrl: './account.component.css'
 })
 export class AccountComponent {
+
+  idUsuario = Number(sessionStorage.getItem('idUsuario')) || 7;
+  usuario = {
+    name: '',
+    apellido: '',
+    email: '',
+    password: '',
+    postalCode: ''
+  }
+
   registerForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
@@ -25,6 +35,18 @@ export class AccountComponent {
     });
   }
 
+  async ngOnInit() {
+    const response = await fetch('http://127.0.0.1:3000/api/users/' + this.idUsuario, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    this.usuario = await response.json();
+  }
+
+
   onSubmit() {
     if (this.registerForm.valid) {
       const registerObject = {
@@ -35,9 +57,7 @@ export class AccountComponent {
         postalCode: this.registerForm.value.postalCode
       };
 
-      // Llamada a la API para registrar al usuario
       console.log(registerObject);
-      // Aquí puedes realizar la llamada a la API con los datos de `registerObject`
     } else {
       console.log('Formulario inválido');
     }

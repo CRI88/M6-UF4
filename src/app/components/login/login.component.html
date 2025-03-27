@@ -1,12 +1,12 @@
 <div class="login-container">
-    <form [formGroup]="loginForm" class="login-form">
+    <form [formGroup]="loginForm" (submit)="onSubmit()" class="login-form">
         <img class="login-image" src="log.png" alt="User Icon">
 
         <h1 class="login-title">Login</h1>
 
         <mat-form-field class="form-field">
             <mat-label>Email</mat-label>
-            <input type="email" matInput [formControl]="emailFormControl" placeholder="Ex. pat@example.com">
+            <input type="email" matInput formControlName="emailFormControl" placeholder="Ex. pat@example.com">
             <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
                 Please enter a valid email address
             </mat-error>
@@ -22,6 +22,6 @@
 
         <a routerLink="/register" class="register-link">¿No tienes cuenta? ¡Crea una!</a>
 
-        <button type="submit" (click)="onSubmit()" class="submit-button">Iniciar sesión</button>
+        <button type="submit" class="submit-button">Iniciar sesión</button>
     </form>
 </div>

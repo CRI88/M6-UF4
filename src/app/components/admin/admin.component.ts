@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { NgIf, NgClass } from '@angular/common';
-import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-admin',
@@ -16,7 +15,7 @@ export class AdminComponent {
   imagePreview: string | ArrayBuffer | null = null;
   private apiUrl = 'http://172.17.22.89:3000/upload';
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private productService: ProductService) {
+  constructor(private fb: FormBuilder, private http: HttpClient) {
     this.productForm = this.fb.group({
       reference: ['', Validators.required],
       name: ['', [
@@ -43,11 +42,11 @@ export class AdminComponent {
   nameValidator(control: any) {
     let nameTaken = false;
     
-    this.productService.getProducts().subscribe(products => {
-      if (products.some((product: any) => product.name.toLowerCase() === control.value.toLowerCase())) {
-        nameTaken = true;
-      }
-    });
+    //this.productService.getProducts().subscribe(products => {
+     // if (products.some((product: any) => product.name.toLowerCase() === control.value.toLowerCase())) {
+      //  nameTaken = true;
+    //  }
+  //  });
   
     if (nameTaken) {
       return { nameTaken: true };
@@ -94,10 +93,10 @@ export class AdminComponent {
         (response) => {
           console.log('Producto agregado:', response);
 
-          this.productService.addProduct({
-            ...productData,
-            imageUrl: this.imagePreview
-          });
+   //       this.productService.addProduct({
+     //       ...productData,
+       //     imageUrl: this.imagePreview
+         // });
 
           this.productForm.reset();
           this.imagePreview = null;

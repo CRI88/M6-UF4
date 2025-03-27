@@ -5,7 +5,11 @@
     <div class="content2">
         <a routerLink="">HOME</a>
         <a routerLink="products">PRODUCTOS</a>
+
+        @if (userRole === 'admin') {
         <a routerLink="admin">ADMIN</a>
+        }
+
         <a routerLink="account">CUENTA</a>
         <a routerLink="productview">PEDIDOS</a>
     </div>
