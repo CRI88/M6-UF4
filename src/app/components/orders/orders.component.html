@@ -1,0 +1,33 @@
+<div class="store-container">
+    <h1>Mis Pedidos</h1>
+  
+    <div *ngIf="orders.length === 0" class="empty-message">
+      No tienes pedidos actualmente.
+    </div>
+  
+    <div class="product-list">
+      @if (orders.length != 0) {
+        <div class="product-card" *ngFor="let order of orders">
+          <h2>Pedido #{{ order.orderid }}</h2>
+          <p><strong>Fecha:</strong> {{ order.order_date }}</p>
+          <p><strong>Total:</strong> ${{ order.total_amount }}</p>
+  
+          <div *ngIf="orderItems[order.orderid].length > 0">
+            <h3>Productos:</h3>
+            <ul class="product-list">
+              <li *ngFor="let item of orderItems[order.orderid]" class="product-item">
+                <img [src]="item.imageUrl" alt="Imagen del producto" class="product-image" />
+                <div>
+                  <h4>{{ item.product_name }}</h4>
+                  <p>{{ item.description }}</p>
+                  <p><strong>Cantidad:</strong> {{ item.quantity }}</p>
+                  <p><strong>Precio:</strong> ${{ item.price }}€</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+  

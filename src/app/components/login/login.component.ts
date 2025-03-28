@@ -47,7 +47,8 @@ export class LoginComponent {
 
     sessionStorage.setItem('userRole', data.usuario.userrole);
     sessionStorage.setItem('user', data.usuario);
-    sessionStorage.setItem('idUsuario', data.usuario.idUsuario);
+    sessionStorage.setItem('idUsuario', data.usuario.userid);
+    console.log(sessionStorage.getItem('idUsuario'));
     
     if (response.status === 200) {
       console.log('Login correcto');

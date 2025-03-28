@@ -14,13 +14,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 })
 export class AccountComponent {
 
-  idUsuario = Number(sessionStorage.getItem('idUsuario')) || 7;
+  idUsuario = Number(sessionStorage.getItem('idUsuario'));
   usuario = {
-    name: '',
-    apellido: '',
+    username: '',
+    surname: '',
     email: '',
     password: '',
-    postalCode: ''
+    postal_code: 0
   }
 
   registerForm: FormGroup;
@@ -33,9 +33,10 @@ export class AccountComponent {
       contrasenya: ['', [Validators.required]],
       postalCode: ['', [Validators.required, Validators.pattern('^[0-9]{5}$')]]
     });
+
   }
 
-  async ngOnInit() {
+  async ngOnInit(): Promise<void> {
     const response = await fetch('http://127.0.0.1:3000/api/users/' + this.idUsuario, {
       method: 'GET',
       headers: {
@@ -44,22 +45,37 @@ export class AccountComponent {
     });
 
     this.usuario = await response.json();
+    console.log(this.usuario);
+
+    this.registerForm.patchValue({ name: this.usuario.username });
+    this.registerForm.patchValue({ apellido: this.usuario.surname });
+    this.registerForm.patchValue({ email: this.usuario.email });
+    this.registerForm.patchValue({ contrasenya: this.usuario.password });
+    this.registerForm.patchValue({ postalCode: this.usuario.postal_code });
+
+
   }
 
 
-  onSubmit() {
-    if (this.registerForm.valid) {
-      const registerObject = {
-        name: this.registerForm.value.name,
-        apellido: this.registerForm.value.apellido,
-        email: this.registerForm.value.email,
-        password: this.registerForm.value.contrasenya,
-        postalCode: this.registerForm.value.postalCode
-      };
+  async onSubmit() {
 
-      console.log(registerObject);
-    } else {
-      console.log('Formulario inválido');
-    }
+    const registerObject = {
+      username: this.registerForm.value.name,
+      surname: this.registerForm.value.apellido,
+      email: this.registerForm.value.email,
+      password: this.registerForm.value.contrasenya,
+      postal_code: this.registerForm.value.postalCode
+    };
+
+    console.log(registerObject);
+
+    const response = await fetch('http://127.0.0.1:3000/api/users/' + this.idUsuario, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(registerObject)
+    });
+    console.log(response);
   }
 }

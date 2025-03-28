@@ -4,9 +4,9 @@ import { AdminComponent } from './components/admin/admin.component';
 import { Component } from '@angular/core';
 import { ProductsComponent } from './components/products/products.component';
 import { AccountComponent } from './components/account/account.component';
-import { ProductviewComponent } from './components/productview/productview.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
+import { OrdersComponent } from './components/orders/orders.component';
 
 export const routes: Routes = [
     { path: '', component: InitialpageComponent },
@@ -16,5 +16,5 @@ export const routes: Routes = [
     { path: 'admin', component: AdminComponent},
     { path: 'products', component: ProductsComponent},
     { path: 'account', component: AccountComponent},
-    { path: 'productview', component: ProductviewComponent}
+    { path: 'orders', component: OrdersComponent}
 ];
