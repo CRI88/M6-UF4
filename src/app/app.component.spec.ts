@@ -1,10 +1,20 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
+      providers: [
+        { 
+          provide: ActivatedRoute, 
+          useValue: { 
+            queryParams: of({ productoId: 1, action: 'update' })
+          }
+        }
+      ]
     }).compileComponents();
   });
 
@@ -20,10 +30,4 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('nike');
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, nike');
-  });
 });

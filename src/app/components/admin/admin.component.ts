@@ -14,7 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 export class AdminComponent implements OnInit {
   productForm: FormGroup;
   imagePreview: string | ArrayBuffer | null = null;
-  private apiUrl = 'http://172.17.22.89:3000/upload';
+  private apiUrl = 'http://localhost:3000';
 
   action: string = '';
   productoId: number = 0;
@@ -133,7 +133,7 @@ export class AdminComponent implements OnInit {
         );
       } else {
         // Crear nuevo producto (POST)
-        this.http.post(this.apiUrl, formData).subscribe(
+        this.http.post('http://127.0.0.1:3000/api/products', formData).subscribe(
           (response) => {
             console.log('Producto agregado:', response);
             this.productForm.reset();
@@ -141,6 +141,7 @@ export class AdminComponent implements OnInit {
           },
           (error) => {
             console.error('Error al agregar producto:', error);
+            console.log(formData);
           }
         );
       }
