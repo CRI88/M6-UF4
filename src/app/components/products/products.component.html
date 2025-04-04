@@ -4,7 +4,6 @@
     @if (products.length !=0) {
     <div class="product-card" *ngFor="let product of products">
       <img [src]="'http://localhost/productos/' + product.image" alt="Imagen del producto" class="product-image" />
-      <p>{{product.image}}</p>
       <h2>{{ product.name }}</h2>
       <p>{{ product.description }}</p>
       <p><strong>Precio:</strong> {{ product.price }}€</p>
@@ -12,11 +11,14 @@
       <p><strong>Stock:</strong> {{stock}}</p>
       <p *ngIf="product.offer" class="offer-label">¡En oferta!</p>
       @if (userRole === 'guest') {
-      <button (click)="addToCart(product)">Añadir al carrito</button>
+      <button (click)="addToCart(product)" class="buy">Comprar producto</button>
       }
       @if (userRole === 'admin') {
-      <button  routerLink="/admin" [queryParams]="{ productoId: product.productid, action:'update' }">Editar</button> <!-- (click)="editProduct(product)" -->
-      <button (click)="deleteProduct(product)">Eliminar</button>
+      <div class="admin-actions">
+        <button routerLink="/admin" [queryParams]="{ productoId: product.productid, action:'update' }" class="update">Editar</button>
+        <!-- (click)="editProduct(product)" -->
+        <button (click)="deleteProduct(product)" class="delete">Eliminar</button>
+      </div>
       }
     </div>
     }

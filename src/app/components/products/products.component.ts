@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-store',
@@ -49,25 +50,28 @@ export class ProductsComponent implements OnInit {
       return;
     }
     try {
+      console.log('Enviando orden...');
       const orderResponse = await this.httpclient.post('http://127.0.0.1:3000/api/orders', {
         userid: this.userId,
         total_amount: product.price
       }).toPromise();
-
+      console.log('Orden creada:', orderResponse);
+  
       const orderId = (orderResponse as any).orderid;
-
-      await this.httpclient.post('http://127.0.0.1:3000/api/order_items', {
-        orderid: orderId,
+      console.log('Enviando artículo para orden:', orderId);
+      const orderItemResponse = await this.httpclient.post('http://127.0.0.1:3000/api/order_items', {
+        orderid: orderId + 1,
         productid: product.productid,
         quantity: 1,
         price: product.price
       }).toPromise();
-
+      console.log('Artículo añadido a la orden:', orderItemResponse);
+  
       console.log('Producto añadido al carrito correctamente');
     } catch (error) {
       console.error('Error al añadir producto al carrito', error);
     }
-  }
+  }  
 
   /* async editProduct(product: any) {
     try {
@@ -80,7 +84,7 @@ export class ProductsComponent implements OnInit {
 
   async deleteProduct(product: any) {
     try {
-      await this.httpclient.delete(`http://127.0.0.1:3000/api/products/${product.productid}`).toPromise();
+      await lastValueFrom(this.httpclient.delete(`http://127.0.0.1:3000/api/products/${product.productid}`));
       console.log('Producto eliminado correctamente');
     } catch (error) {
       console.error('Error al eliminar producto', error);

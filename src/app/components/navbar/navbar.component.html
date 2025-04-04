@@ -19,6 +19,23 @@
             <input type="text" class="search-input" placeholder="Buscar...">
         </div>
         <img class="icons" src="heart.png" alt="heart">
-        <img class="icons" src="shopping_bag.png" alt="shopping_bag">
+        <img class="icons cart-icon" src="shopping_bag.png" alt="shopping_bag" (click)="toggleCart()">
+        
+        <div class="cart-modal" [class.active]="isCartOpen">
+            <h3>Carrito</h3>
+            <div *ngIf="cartItems.length > 0; else emptyCart">
+                <div class="cart-item" *ngFor="let item of cartItems">
+                    <img [src]="item.image" alt="{{ item.name }}">
+                    <div class="details">
+                        <p>{{ item.name }}</p>
+                        <p class="price">${{ item.price }}</p>
+                    </div>
+                </div>
+                <button class="checkout-btn" (click)="checkout()">Finalizar compra</button>
+            </div>
+            <ng-template #emptyCart>
+                <p>Tu carrito está vacío.</p>
+            </ng-template>
+        </div>
     </div>
 </div>
