@@ -16,6 +16,8 @@ export class LoginComponent {
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   loginForm: FormGroup;
 
+  errorMessage: string = '';
+
   constructor(private fb: FormBuilder, private router: Router) {
     this.loginForm = this.fb.group({
       emailFormControl: ['', [Validators.required, Validators.email]],
@@ -23,38 +25,33 @@ export class LoginComponent {
     })
   }
 
-  async onSubmit(){
-
+  async onSubmit() {
     const loginObject = {
       email: this.loginForm.value.emailFormControl,
       password: this.loginForm.value.textViewContrasenya,
+    };
+
+    try {
+      const response = await fetch('http://127.0.0.1:3000/api/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(loginObject),
+      });
+
+      const data = await response.json();
+
+      if (response.status === 200) {
+        sessionStorage.setItem('userRole', data.usuario.userrole);
+        sessionStorage.setItem('user', data.usuario);
+        sessionStorage.setItem('idUsuario', data.usuario.userid);
+        this.router.navigate(['/initial']);
+      } else {
+        this.errorMessage = data.message || 'Error al iniciar sesión';
+      }
+    } catch (err) {
+      this.errorMessage = 'No se pudo conectar con el servidor';
     }
-
-    console.log(loginObject);
-
-    const response = await fetch('http://127.0.0.1:3000/api/users/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(loginObject),
-      
-    });
-
-    const data = await response.json();
-
-    console.log(data);
-
-    sessionStorage.setItem('userRole', data.usuario.userrole);
-    sessionStorage.setItem('user', data.usuario);
-    sessionStorage.setItem('idUsuario', data.usuario.userid);
-    console.log(sessionStorage.getItem('idUsuario'));
-    
-    if (response.status === 200) {
-      console.log('Login correcto');
-
-      this.router.navigate(['/initial']);
-    }
-
   }
 }

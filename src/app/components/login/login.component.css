@@ -86,3 +86,10 @@ mat-error {
         width: 80px;
     }
 }
+
+.error-msg {
+    color: red;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  
