@@ -105,7 +105,6 @@ describe('AdminComponent', () => {
       description: 'Un producto nuevo',
       offer: false,
       type: 'otros',
-      stock: 10,
       image: 'captura2.png',
     });
   
@@ -119,7 +118,6 @@ describe('AdminComponent', () => {
       price: 25.50,
       offer: false,
       type: 'otros',
-      stock: 10,
       image: 'captura2.png',
     });
   

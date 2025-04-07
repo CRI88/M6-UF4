@@ -47,16 +47,17 @@ describe("Admin Product Form", () => {
       cy.get("#description").type("Zapatillas ligeras de running");
       cy.get("#type").select("calzado");
       cy.get("#offer").check();
+      cy.get("#image").selectFile('README.md');
   
       // Simular selección de imagen (fake file)
-      const fileName = "example.jpg";
+      /* const fileName = "example.jpg";
       cy.fixture(fileName).then(fileContent => {
         cy.get("#image").attachFile({
           fileContent: fileContent.toString(),
           fileName: fileName,
           mimeType: "image/jpeg"
         });
-      });
+      }); */
   
       cy.get("button[type='submit']").click();
   
