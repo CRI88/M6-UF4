@@ -19,13 +19,11 @@ describe("Login Page", () => {
   
     it("Should show an error for invalid email", () => {
         cy.get("input[formControlName='emailFormControl']").type("invalid-email");
-        cy.get("input[formControlName='emailFormControl']").blur(); // obligamos el blur para disparar la validación
+        cy.get("input[formControlName='emailFormControl']").blur();
       
-        // Esperamos a que el mat-error aparezca
         cy.get("mat-error").should("contain", "Please enter a valid email address");
       });
       
-  
     it("Should allow login with valid credentials", () => {
       cy.intercept("POST", "http://127.0.0.1:3000/api/users/login", {
         statusCode: 200,
